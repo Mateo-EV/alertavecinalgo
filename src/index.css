@@ -27,7 +27,10 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
+
+    --bcp: #18181b;
+    --bcprincipal: #f3f4f6;
   }
 }
 @layer base {
@@ -37,4 +40,39 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.app-container {
+  @apply min-h-screen flex flex-col justify-between bg-[var(--bcprincipal)];
+}
+
+.top-nav,
+.bottom-nav {
+  @apply bg-[var(--bcp)] text-white flex items-center justify-between p-4;
+}
+
+.map-container {
+  @apply relative;
+  height: calc(55vh);
+}
+
+.emergency-button-container {
+  @apply p-4 mt-2;
+}
+
+.emergency-button {
+  @apply bg-[var(--bcp)] text-white p-4 rounded-lg text-lg font-semibold flex items-center justify-center shadow-md;
+  height: 5rem;
+}
+
+.options {
+  @apply flex justify-around p-4 gap-4;
+}
+
+.option {
+  @apply bg-white shadow-lg p-4 rounded-lg flex flex-col items-center justify-center text-center w-36;
+}
+
+.bottom-nav .icon {
+  @apply text-2xl text-white;
 }

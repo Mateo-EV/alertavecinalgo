@@ -8,11 +8,33 @@ import LoginPage from "./router/login"
 import QueryProvider from "./providers/QueryProvider"
 import RegisterPage from "./router/register"
 import { Toaster } from "sonner"
+import HelpCenterPage from "./router/emergency/help-center"
+import RootLayout from "./router/root"
+import EmergencyPage from "./router/emergency"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage />
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <MainPage />
+      },
+      {
+        path: "emergency",
+        children: [
+          {
+            index: true,
+            element: <EmergencyPage />
+          },
+          {
+            path: "help-center",
+            element: <HelpCenterPage />
+          }
+        ]
+      }
+    ]
   },
   {
     path: "login",
