@@ -3,16 +3,16 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default function MainPage() {
-  const { session } = useAuth()
+  const { session, logOut } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!session) {
-      navigate("/login")
+      navigate("/register", { viewTransition: true })
     }
   }, [session])
 
   if (!session) return null
 
-  return <div>MainPage</div>
+  return <div onClick={logOut}>MainPage</div>
 }

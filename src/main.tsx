@@ -5,6 +5,9 @@ import MainPage from "./router"
 import "./index.css"
 import AuthProvider from "./providers/AuthProvider"
 import LoginPage from "./router/login"
+import QueryProvider from "./providers/QueryProvider"
+import RegisterPage from "./router/register"
+import { Toaster } from "sonner"
 
 const router = createBrowserRouter([
   {
@@ -14,13 +17,20 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />
+  },
+  {
+    path: "register",
+    element: <RegisterPage />
   }
 ])
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <Toaster richColors position="top-center" />
+      </AuthProvider>
+    </QueryProvider>
   </React.StrictMode>
 )
