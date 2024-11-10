@@ -27,7 +27,10 @@ export function useGroups() {
       } catch (error) {
         return null
       }
-    }
+    },
+    refetchInterval: 1000,
+    staleTime: 0,
+    gcTime: 0
   })
 }
 

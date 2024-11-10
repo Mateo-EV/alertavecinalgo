@@ -27,6 +27,9 @@ import { Textarea } from "@/components/ui/textarea"
 import useForm from "@/hooks/useForm"
 import { axios } from "@/lib/axios"
 import { useAuth } from "@/providers/AuthProvider"
+import { Incident } from "@/type"
+import { useQueryClient } from "@tanstack/react-query"
+import { sendNotification } from "@tauri-apps/plugin-notification"
 import { CameraIcon, SendIcon, Upload, XIcon } from "lucide-react"
 import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -62,6 +65,7 @@ export default function ReportIncident() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { accessToken } = useAuth()
   const navigate = useNavigate()
+  const queryUtils = useQueryClient()
   const form = useForm({
     schema: formSchema,
     defaultValues: {
@@ -69,21 +73,40 @@ export default function ReportIncident() {
       incident_type: ""
     },
     onSubmit: async ({ description, incident_type }) => {
-      const formData = new FormData()
-      formData.append("description", description)
-      formData.append("incident_type", incident_type)
-      formData.append("location_lat", "-14.083723")
-      formData.append("location_lon", "-75.742533")
-      formData.append("file", file)
+      try {
+        const formData = new FormData()
+        formData.append("description", description)
+        formData.append("incident_type", incident_type)
+        formData.append("location_lat", "-14.083723")
+        formData.append("location_lon", "-75.742533")
+        formData.append("file", file)
 
-      await axios.post("/incidents/register", formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+        const response = await axios.post<Incident>(
+          "/incidents/register",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
+        )
 
-      toast.success("Incidencia creada correctamente")
-      navigate("/")
+        queryUtils.setQueryData<Incident[]>(["incidents"], prev => {
+          if (!prev) return
+          return [...prev, response.data]
+        })
+
+        toast.success("Incidencia creada correctamente")
+
+        sendNotification({
+          title: response.data.incident_type,
+          body: response.data.description,
+          attachments: [{ id: response.data.id, url: response.data.multimedia }]
+        })
+        navigate("/")
+      } catch (error) {
+        toast.error("Algo salió mal")
+      }
     }
   })
 

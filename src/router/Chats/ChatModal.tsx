@@ -1,12 +1,12 @@
 import { MultiSelect } from "@/components/MultiSelect"
 import { Button, SubmitButton } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog"
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
+} from "@/components/ui/drawer"
 import {
   FormCompleteProvider,
   FormControl,
@@ -22,7 +22,7 @@ import { useUsers } from "@/hooks/useApi"
 import useForm from "@/hooks/useForm"
 import { axios } from "@/lib/axios"
 import { useAuth } from "@/providers/AuthProvider"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { PlusIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -38,19 +38,21 @@ export default function ChatModal() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerTrigger asChild>
         <Button size="icon" variant="secondary">
           <PlusIcon />
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Crear Grupo</DialogTitle>
-        </DialogHeader>
+      </DrawerTrigger>
+      <DrawerContent className="px-6 pb-6 bg-white">
+        <DrawerHeader>
+          <DrawerTitle className="text-[var(--color-princi)]">
+            Crear Grupo
+          </DrawerTitle>
+        </DrawerHeader>
         <CreateGroupForm setIsOpen={setIsOpen} />
-      </DialogContent>
-    </Dialog>
+      </DrawerContent>
+    </Drawer>
   )
 }
 
@@ -96,6 +98,8 @@ function CreateGroupForm({ setIsOpen }) {
         control={form.control}
         name="groupName"
         label="Nombre"
+        classNameLabel="text-[var(--color-princi)]"
+        input={{ className: "bg-white text-[var(--color-princi)]" }}
       />
       {isLoading ? (
         <Skeleton className="h-20 w-full rounded-lg" />
@@ -105,7 +109,9 @@ function CreateGroupForm({ setIsOpen }) {
           name="userIds"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Seleccionar Usuarios</FormLabel>
+              <FormLabel className="text-[var(--color-princi)]">
+                Seleccionar Usuarios
+              </FormLabel>
               <FormControl>
                 <MultiSelect
                   value={field.value}
@@ -131,8 +137,13 @@ function CreateGroupForm({ setIsOpen }) {
         control={form.control}
         name="description"
         label="Descripción"
+        classNameLabel="text-[var(--color-princi)]"
+        input={{ className: "bg-white text-[var(--color-princi)]" }}
       />
-      <SubmitButton isSubmitting={form.formState.isSubmitting}>
+      <SubmitButton
+        variant="secondary"
+        isSubmitting={form.formState.isSubmitting}
+      >
         Crear
       </SubmitButton>
     </FormCompleteProvider>

@@ -1,21 +1,22 @@
 import { axios } from "@/lib/axios"
 import { useAuth } from "@/providers/AuthProvider"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useGeolocation } from "./useGeolocation"
 
 export function useTriggerEmergencyAlert() {
   const { accessToken } = useAuth()
   const queryClient = useQueryClient()
 
   const queryKey = ["user_in_emergency"]
-  // const { latitute, longitude } = useGeolocation()
+  const data = useGeolocation()
 
   return useMutation({
     mutationFn: async () => {
       await axios.post(
         "/emergency/alert",
         {
-          locationLat: -14.083723,
-          locationLon: -75.742533
+          locationLat: data?.latitute ?? -14.083723,
+          locationLon: data?.longitude ?? -75.742533
         },
         {
           headers: {
@@ -31,6 +32,9 @@ export function useTriggerEmergencyAlert() {
     },
     onError: () => {
       queryClient.setQueryData(queryKey, false)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["groups"] })
     }
   })
 }
@@ -60,6 +64,9 @@ export function useCancelEmergencyAlert() {
     },
     onError: () => {
       queryClient.setQueryData(queryKey, true)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["groups"] })
     }
   })
 }

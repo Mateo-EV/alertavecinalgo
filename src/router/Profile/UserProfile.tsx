@@ -3,14 +3,14 @@ import React, { useState } from "react"
 import { MdPhotoCamera } from "react-icons/md"
 
 export default function UserProfile() {
-  const [name, setName] = useState("Juan Pérez")
-  const [email, setEmail] = useState("juan.perez@example.com")
-  const [phone, setPhone] = useState("+51 987 654 321")
-  const [address, setAddress] = useState("Av. Arequipa 123, Lima")
+  const { session, logOut } = useAuth()
+  const [name, setName] = useState(session.first_name + " " + session.last_name)
+  const [email, setEmail] = useState(session.email)
+  const [phone, setPhone] = useState(session.phone)
+  const [address, setAddress] = useState(session.address)
   const [emailNotifications, setEmailNotifications] = useState(false)
   const [pushNotifications, setPushNotifications] = useState(false)
   const [smsNotifications, setSmsNotifications] = useState(false)
-  const { session, logOut } = useAuth()
 
   return (
     <div className="p-6 space-y-6 text-[var(--color-princi)]">

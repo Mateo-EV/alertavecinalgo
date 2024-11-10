@@ -7,6 +7,8 @@ export function useGeolocation() {
     queryFn: async () => {
       const position = await getCurrentPosition()
 
+      if (!position) return null
+
       return {
         latitute: position.coords.latitude,
         longitude: position.coords.longitude

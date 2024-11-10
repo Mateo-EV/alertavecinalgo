@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/Footer"
 import Navbar from "@/components/layout/Navbar"
+import TourComponent from "@/lib/tour-steps"
 import { useAuth } from "@/providers/AuthProvider"
 import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
@@ -19,7 +20,7 @@ export default function RootLayout() {
   return (
     <div className="app-container bg-gray-900 min-h-screen flex flex-col">
       {/* Navbar (Header) */}
-      <div className="sticky top-0 z-50">
+      <div className="sticky top-0 z-50 profile-dropdown">
         <Navbar />
       </div>
 
@@ -30,6 +31,7 @@ export default function RootLayout() {
 
       {/* Footer */}
       <Footer />
+      <TourComponent />
     </div>
   )
 }

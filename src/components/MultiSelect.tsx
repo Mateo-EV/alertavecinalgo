@@ -36,7 +36,7 @@ export const MultiSelect = React.forwardRef<
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between bg-white text-[var(--color-princi)]"
           ref={ref}
           {...props}
         >

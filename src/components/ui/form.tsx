@@ -171,6 +171,7 @@ type FormInputControllerProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = Omit<ControllerProps<TFieldValues, TName>, "render"> & {
   input?: React.ComponentProps<"input">
+  classNameLabel?: string
   label: string
 }
 
@@ -180,6 +181,7 @@ const FormInputController = <
 >({
   input = {},
   label,
+  classNameLabel,
   ...props
 }: FormInputControllerProps<TFieldValues, TName>) => {
   return (
@@ -187,7 +189,7 @@ const FormInputController = <
       {...props}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className={classNameLabel}>{label}</FormLabel>
           <FormControl>
             <Input {...input} type={input.type ?? "text"} {...field} />
           </FormControl>

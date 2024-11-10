@@ -20,6 +20,8 @@ import RegisterPage from "./router/register"
 import ReportIncident from "./router/Report/ReportIncident"
 import RootLayout from "./router/root"
 import ChatBox from "./router/Chats/ChatBox"
+import EmergencyHelpCenterMap from "./router/emergency/help-center/map/EmergencyHelpCenterMap"
+import NotificationInterface from "./router/Notifications/NotificationInterface"
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <EmergencyHomePage /> },
           { path: "help-center", element: <HelpCenterPage /> },
+          { path: "help-center/map", element: <EmergencyHelpCenterMap /> },
           {
             path: "emergency-numbers",
             element: <EmergencyNumbersPage />
@@ -67,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "community",
         element: <CommunityPage />
+      },
+      {
+        path: "notifications",
+        element: <NotificationInterface />
       }
     ]
   },

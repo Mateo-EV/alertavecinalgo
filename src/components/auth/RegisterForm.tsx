@@ -25,7 +25,7 @@ export default function RegisterForm() {
     onSubmit: async values => {
       try {
         const response = await axios.post("/auth/register", values)
-
+        localStorage.setItem("isNewUser", "true")
         if (response.data) {
           navigate("/login")
         }

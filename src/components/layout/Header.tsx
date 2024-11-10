@@ -1,4 +1,5 @@
 import { MdMenu, MdNotifications } from "react-icons/md"
+import { Link } from "react-router-dom"
 
 type HeaderProps = {
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -12,7 +13,9 @@ export default function Header({ setIsSidebarOpen }: HeaderProps) {
         onClick={() => setIsSidebarOpen(prev => !prev)}
       />
       <h1 className="text-lg font-bold">Ciudadano</h1>
-      <MdNotifications className="text-2xl" />
+      <Link to="notifications">
+        <MdNotifications className="text-2xl" />
+      </Link>
     </header>
   )
 }
