@@ -126,8 +126,10 @@ function ChatInput({ groupId }) {
 
       return messageCreated
     },
-    onMutate: content => {
+    onMutate: async content => {
       const temporalId = generateUUID()
+
+      await queryClient.cancelQueries({ queryKey: ["unique-group"] })
 
       queryClient.setQueryData<GroupResponseUnique>(
         ["unique-group", groupId],
@@ -148,6 +150,8 @@ function ChatInput({ groupId }) {
           }
         }
       )
+
+      await queryClient.invalidateQueries({ queryKey: ["unique-group"] })
 
       setMessage("")
 
