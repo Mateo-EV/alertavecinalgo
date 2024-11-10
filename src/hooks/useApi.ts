@@ -54,6 +54,7 @@ export function useIsUserInEmergency() {
 export type GroupResponseUnique = Group & {
   groupMessage: Array<GroupMessage & { user: User }>
   groupUser: Array<GroupUser & { user: User }>
+  alerts: Array<Alert & { user: User }>
 }
 
 export function useGroupById(groupId: string) {

@@ -24,7 +24,7 @@ export default function RootLayout() {
       </div>
 
       {/* Contenido Principal */}
-      <div className="flex-1 w-full p-4">
+      <div className="flex-1 w-full p-4 pb-20">
         <Outlet />
       </div>
 

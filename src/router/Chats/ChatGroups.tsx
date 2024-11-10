@@ -3,6 +3,7 @@ import { GroupsReponse, useGroups } from "@/hooks/useApi"
 import { useMemo, useState } from "react"
 import ChatModal from "./ChatModal"
 import { Link } from "react-router-dom"
+import { AlertCircleIcon } from "lucide-react"
 
 function useDividedGroups() {
   const { data, isLoading } = useGroups()
@@ -79,6 +80,19 @@ export default function ChatGroups() {
 }
 
 function GroupCard({ group }: { group: GroupsReponse[number] }) {
+  const Content = () => {
+    if (group.alerts[0] && group.alerts[0].status === "activo") {
+      return (
+        <div className="flex items-center">
+          <AlertCircleIcon className="size-4 inline text-red-500" />
+          <span className="ml-1 text-red-500">Emergencia</span>
+        </div>
+      )
+    }
+
+    return group.groupMessage[0]?.content
+  }
+
   return (
     <Link
       to={`/chats/${group.id}`}
@@ -89,7 +103,9 @@ function GroupCard({ group }: { group: GroupsReponse[number] }) {
       </div>
       <div className="ml-4">
         <p className="font-semibold">{group.name}</p>
-        <p className="text-gray-500">{group.groupMessage[0]?.content}</p>
+        <p className="text-gray-500">
+          <Content />
+        </p>
       </div>
     </Link>
   )

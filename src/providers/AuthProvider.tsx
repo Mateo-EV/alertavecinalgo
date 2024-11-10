@@ -9,6 +9,8 @@ export type Session = {
   first_name: string
   last_name: string
   dni: string
+  phone: String
+  address: String
 }
 
 type AuthContextProps = {
