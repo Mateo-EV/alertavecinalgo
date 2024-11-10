@@ -7,18 +7,19 @@ import AuthProvider from "./providers/AuthProvider"
 import QueryProvider from "./providers/QueryProvider"
 import MainPage from "./router"
 
-import EmergencyHomePage from "./router/emergency/EmergencyHomePage"
-import HelpCenterPage from "./router/emergency/help-center/HelpCenterPage"
+import NewsAlerts from "./router/Alerts/NewsAlerts"
+import ChatGroups from "./router/Chats/ChatGroups"
+import CommunityPage from "./router/Community/CommunityPage"
 import EmergencyNumbersPage from "./router/emergency/Emergency-numbers/EmergencyNumbersPage"
 import EmergencyProtocolPage from "./router/emergency/emergency-protocol/EmergencyProtocolPage"
+import EmergencyHomePage from "./router/emergency/EmergencyHomePage"
+import HelpCenterPage from "./router/emergency/help-center/HelpCenterPage"
 import LoginPage from "./router/login"
-import RegisterPage from "./router/register"
-import RootLayout from "./router/root"
-import ChatBody from "./router/Chats/ChatBody"
-import ReportIncident from "./router/Report/ReportIncident"
-import NewsAlerts from "./router/Alerts/NewsAlerts"
 import UserProfile from "./router/Profile/UserProfile"
-import CommunityPage from "./router/Community/CommunityPage"
+import RegisterPage from "./router/register"
+import ReportIncident from "./router/Report/ReportIncident"
+import RootLayout from "./router/root"
+import ChatBox from "./router/Chats/ChatBox"
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,10 @@ const router = createBrowserRouter([
       },
       {
         path: "chats",
-        element: <ChatBody />
+        children: [
+          { index: true, element: <ChatGroups /> },
+          { path: ":groupId", element: <ChatBox /> }
+        ]
       },
       {
         path: "report",

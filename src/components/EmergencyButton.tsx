@@ -3,6 +3,8 @@ import {
   useCancelEmergencyAlert,
   useTriggerEmergencyAlert
 } from "@/hooks/usePost"
+import useTripleClick from "@/hooks/useTripleClick"
+import { CircleIcon } from "lucide-react"
 import { MdShield } from "react-icons/md"
 import { Skeleton } from "./ui/skeleton"
 import {
@@ -11,9 +13,6 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "./ui/tooltip"
-import useClickCounter from "@/hooks/useTripleClick"
-import useTripleClick from "@/hooks/useTripleClick"
-import { CircleIcon } from "lucide-react"
 
 export default function EmergencyButton() {
   const { data: groups, isLoading } = useGroups()

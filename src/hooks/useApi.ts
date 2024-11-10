@@ -1,7 +1,15 @@
 import { axios } from "@/lib/axios"
 import { useAuth } from "@/providers/AuthProvider"
-import { Group } from "@/type"
+import { Alert, Group, GroupMessage, GroupUser, User } from "@/type"
 import { useQuery } from "@tanstack/react-query"
+
+export type GroupsReponse = Array<
+  Group & {
+    groupMessage: [GroupMessage]
+    alerts: [Alert]
+    _count: { groupUsers: number }
+  }
+>
 
 export function useGroups() {
   const { accessToken } = useAuth()
@@ -9,7 +17,7 @@ export function useGroups() {
     queryKey: ["groups"],
     queryFn: async () => {
       try {
-        const { data } = await axios.get<Group[]>("/group", {
+        const { data } = await axios.get<GroupsReponse>("/group", {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
@@ -30,6 +38,54 @@ export function useIsUserInEmergency() {
     queryFn: async () => {
       try {
         const { data } = await axios.get<boolean>("/emergency", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+
+        return data
+      } catch (error) {
+        return null
+      }
+    }
+  })
+}
+
+export type GroupResponseUnique = Group & {
+  groupMessage: Array<GroupMessage & { user: User }>
+  groupUser: Array<GroupUser & { user: User }>
+}
+
+export function useGroupById(groupId: string) {
+  const { accessToken } = useAuth()
+  return useQuery({
+    queryKey: ["unique-group", groupId],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get<GroupResponseUnique>(
+          `/group/${groupId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
+        )
+
+        return data
+      } catch (error) {
+        return null
+      }
+    }
+  })
+}
+
+export function useUsers() {
+  const { accessToken } = useAuth()
+  return useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get<User[]>(`/users`, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }

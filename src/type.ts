@@ -40,6 +40,7 @@ export type GroupUser = {
 export type GroupMessage = {
   id: string
   user_id: string
+  group_id: string
   content: string
   timestamp: Date
 }
