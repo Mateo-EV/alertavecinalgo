@@ -10,7 +10,7 @@ import { useNavigation } from "react-router-dom"
 import { toast } from "sonner"
 
 export default function LoginForm() {
-  const { setSession } = useAuth()
+  const { setSession, setAccessToken } = useAuth()
   const { state } = useNavigation()
   const form = useForm({
     schema: loginSchema,
@@ -33,6 +33,7 @@ export default function LoginForm() {
         await store.save()
 
         setSession(session)
+        setAccessToken(access_token)
         toast.success("Registrado exitosamente")
       } catch (error) {
         if (isAxiosError(error)) {

@@ -13,7 +13,9 @@ export type Session = {
 
 type AuthContextProps = {
   session: Session | null
+  accessToken: string
   setSession: (session: Session | null) => void
+  setAccessToken: (accessToken: string | null) => void
   logOut: () => void
 }
 
@@ -21,6 +23,7 @@ const AuthContext = createContext<AuthContextProps>(null)
 
 export default function AuthProvider({ children }) {
   const [session, setSession] = useState<Session | null>(null)
+  const [accessToken, setAccessToken] = useState<string | null>(null)
 
   const { isPending } = useQuery({
     queryKey: ["req-profile"],
@@ -31,15 +34,19 @@ export default function AuthProvider({ children }) {
 
         if (!access_token) return
 
+        setAccessToken(access_token)
         const { data } = await axios.get<Session>("auth/profile", {
           headers: { Authorization: `Bearer ${access_token}` }
         })
-        console.log(data)
 
         setSession(data)
       } catch (error) {
         console.log(error)
+        setAccessToken(null)
+        setSession(null)
       }
+
+      return null
     },
     staleTime: 0,
     gcTime: 0
@@ -64,7 +71,9 @@ export default function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ session, setSession, logOut }}>
+    <AuthContext.Provider
+      value={{ session, setSession, logOut, accessToken, setAccessToken }}
+    >
       {children}
     </AuthContext.Provider>
   )

@@ -16,7 +16,7 @@ export default function Sidebar({
     <div
       className={`sidebar bg-black text-white fixed top-0 left-0 h-full w-64 transform ${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out z-50`}
+      } transition-transform duration-300 ease-in-out z-[100]`}
     >
       <button
         className="close-btn p-4 text-white"

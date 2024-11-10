@@ -3,6 +3,7 @@ import { BsPeopleFill, BsTelephoneFill } from "react-icons/bs"
 import { MdCameraAlt, MdHome, MdPerson, MdShield } from "react-icons/md"
 import Map, { Marker } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
+import EmergencyButton from "@/components/EmergencyButton"
 
 const incidents = [
   { id: 1, latitude: -14.068, longitude: -75.73, type: "incidente" },
@@ -60,16 +61,7 @@ export default function MainPage() {
       </div>
 
       {/* Botón de Emergencia */}
-      <div className="emergency-button-container p-4">
-        <button className="emergency-button bg-gray-800 text-white rounded-lg p-4 w-full text-lg font-semibold flex items-center justify-center">
-          <MdShield className="mr-2 text-2xl" />
-          Botón de Emergencia
-        </button>
-        <p className="text-center text-sm mt-2 text-gray-500">
-          Toca rápidamente 3 veces para activar
-        </p>
-      </div>
-
+      <EmergencyButton />
       {/* Opciones de Emergencia y Comunidad */}
       <div className="options flex justify-around p-4">
         <div className="option bg-white shadow-md p-4 rounded-lg text-center w-32 flex-1">
