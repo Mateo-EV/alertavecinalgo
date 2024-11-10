@@ -27,6 +27,8 @@ export default function ChatBox() {
     return <Skeleton className="w-full h-[calc(100vh-11rem)] rounded-lg" />
   }
 
+  console.log(group)
+
   const messages = [...group.groupMessage, ...group.alerts].sort(
     (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
   )
@@ -92,7 +94,7 @@ export default function ChatBox() {
               className={`p-4 rounded-lg shadow-md ${
                 msg.user_id === session.id
                   ? "bg-[var(--color-princi)] self-end"
-                  : "bg-white/10"
+                  : "bg-white/10 text-[var(--color-princi)]"
               }`}
             >
               <p>
@@ -129,7 +131,7 @@ function ChatInput({ groupId }) {
     onMutate: async content => {
       const temporalId = generateUUID()
 
-      await queryClient.cancelQueries({ queryKey: ["unique-group"] })
+      await queryClient.cancelQueries({ queryKey: ["unique-group", groupId] })
 
       queryClient.setQueryData<GroupResponseUnique>(
         ["unique-group", groupId],
@@ -151,11 +153,14 @@ function ChatInput({ groupId }) {
         }
       )
 
-      await queryClient.invalidateQueries({ queryKey: ["unique-group"] })
-
       setMessage("")
 
       return { temporalId }
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["unique-group", groupId]
+      })
     },
     onError: (error, content, context) => {
       console.log(error)

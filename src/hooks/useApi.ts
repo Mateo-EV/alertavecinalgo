@@ -76,7 +76,10 @@ export function useGroupById(groupId: string) {
       } catch (error) {
         return null
       }
-    }
+    },
+    refetchInterval: 2000,
+    staleTime: 0,
+    gcTime: 0
   })
 }
 
