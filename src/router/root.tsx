@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer"
 import Navbar from "@/components/layout/Navbar"
 import { useAuth } from "@/providers/AuthProvider"
 import { useEffect } from "react"
@@ -17,8 +18,18 @@ export default function RootLayout() {
 
   return (
     <div className="app-container bg-gray-900 min-h-screen flex flex-col">
-      <Navbar />
-      <Outlet />
+      {/* Navbar (Header) */}
+      <div className="sticky top-0 z-50">
+        <Navbar />
+      </div>
+
+      {/* Contenido Principal */}
+      <div className="flex-1 w-full p-4">
+        <Outlet />
+      </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

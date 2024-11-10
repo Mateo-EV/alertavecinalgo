@@ -4,6 +4,7 @@ import { MdCameraAlt, MdHome, MdPerson, MdShield } from "react-icons/md"
 import Map, { Marker } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import EmergencyButton from "@/components/EmergencyButton"
+import { Link } from "react-router-dom"
 
 const incidents = [
   { id: 1, latitude: -14.068, longitude: -75.73, type: "incidente" },
@@ -63,36 +64,29 @@ export default function MainPage() {
       {/* Botón de Emergencia */}
       <EmergencyButton />
       {/* Opciones de Emergencia y Comunidad */}
-      <div className="options flex justify-around p-4">
-        <div className="option bg-white shadow-md p-4 rounded-lg text-center w-32 flex-1">
+      <div className="options flex justify-center gap-4 p-4">
+        {/* Opción de Emergencia (con Link) */}
+
+        <Link
+          to="emergency"
+          className="option bg-white shadow-md p-4 rounded-lg text-center w-40 flex-1 max-w-xs"
+        >
           <BsTelephoneFill className="option-icon mb-2 text-3xl text-black" />
           <p className="font-semibold text-[var(--bcp)]">Emergencia</p>
           <p className="text-xs text-gray-500">Números Importantes</p>
-        </div>
-        <div className="option bg-white shadow-md p-4 rounded-lg text-center w-32 flex-1">
+        </Link>
+
+        {/* Opción de Comunidad (sin Link) */}
+
+        <Link
+          to="emergency"
+          className="option bg-white shadow-md p-4 rounded-lg text-center w-40 flex-1 max-w-xs"
+        >
           <BsPeopleFill className="option-icon mb-2 text-3xl text-black" />
           <p className="font-semibold text-[var(--bcp)]">Comunidad</p>
           <p className="text-xs text-gray-500">12 Activos</p>
-        </div>
+        </Link>
       </div>
-
-      {/* Barra de Navegación Inferior */}
-      <footer className="bottom-nav p-2 bg-black text-white">
-        <div className="w-[60%] mx-auto flex justify-around">
-          <div className="flex flex-col items-center">
-            <MdHome className="icon text-2xl" />
-            <p className="text-sm">Inicio</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <MdCameraAlt className="icon text-2xl" />
-            <p className="text-sm">Reportar</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <MdPerson className="icon text-2xl" />
-            <p className="text-sm">Chats</p>
-          </div>
-        </div>
-      </footer>
     </>
   )
 }

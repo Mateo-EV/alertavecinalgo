@@ -1,16 +1,24 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import MainPage from "./router"
+import { Toaster } from "sonner"
 import "./index.css"
 import AuthProvider from "./providers/AuthProvider"
-import LoginPage from "./router/login"
 import QueryProvider from "./providers/QueryProvider"
+import MainPage from "./router"
+
+import EmergencyHomePage from "./router/emergency/EmergencyHomePage"
+import HelpCenterPage from "./router/emergency/help-center/HelpCenterPage"
+import EmergencyNumbersPage from "./router/emergency/Emergency-numbers/EmergencyNumbersPage"
+import EmergencyProtocolPage from "./router/emergency/emergency-protocol/EmergencyProtocolPage"
+import LoginPage from "./router/login"
 import RegisterPage from "./router/register"
-import { Toaster } from "sonner"
-import HelpCenterPage from "./router/emergency/help-center"
 import RootLayout from "./router/root"
-import EmergencyPage from "./router/emergency"
+import ChatBody from "./router/Chats/ChatBody"
+import ReportIncident from "./router/Report/ReportIncident"
+import NewsAlerts from "./router/Alerts/NewsAlerts"
+import UserProfile from "./router/Profile/UserProfile"
+import CommunityPage from "./router/Community/CommunityPage"
 
 const router = createBrowserRouter([
   {
@@ -24,15 +32,37 @@ const router = createBrowserRouter([
       {
         path: "emergency",
         children: [
+          { index: true, element: <EmergencyHomePage /> },
+          { path: "help-center", element: <HelpCenterPage /> },
           {
-            index: true,
-            element: <EmergencyPage />
+            path: "emergency-numbers",
+            element: <EmergencyNumbersPage />
           },
           {
-            path: "help-center",
-            element: <HelpCenterPage />
+            path: "emergency-protocol",
+            element: <EmergencyProtocolPage />
           }
         ]
+      },
+      {
+        path: "chats",
+        element: <ChatBody />
+      },
+      {
+        path: "report",
+        element: <ReportIncident />
+      },
+      {
+        path: "alerts", // Añadir esta ruta para noticias
+        element: <NewsAlerts />
+      },
+      {
+        path: "profile",
+        element: <UserProfile />
+      },
+      {
+        path: "community",
+        element: <CommunityPage />
       }
     ]
   },
