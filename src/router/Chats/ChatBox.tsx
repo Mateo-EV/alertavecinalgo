@@ -161,6 +161,8 @@ function ChatInput({ groupId }) {
       await queryClient.invalidateQueries({
         queryKey: ["unique-group", groupId]
       })
+
+      await queryClient.invalidateQueries({ queryKey: ["groups"] })
     },
     onError: (error, content, context) => {
       console.log(error)
