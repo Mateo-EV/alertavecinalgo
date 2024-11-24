@@ -47,7 +47,7 @@ export default function EmergencyButton() {
       </Tooltip>
     </TooltipProvider>
   ) : (
-    <EmergencyAction isInEmergency={isUserInEmergency} />
+    <EmergencyAction isInEmergency={Boolean(isUserInEmergency)} />
   )
 
   return (

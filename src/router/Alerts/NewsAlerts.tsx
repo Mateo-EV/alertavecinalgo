@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { axios } from "@/lib/axios"
 import { useQuery } from "@tanstack/react-query"
 import { ArrowRightIcon, CalendarIcon, XCircleIcon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 type NewsAlert = {
   id: string
@@ -51,7 +51,7 @@ export default function NewsAlerts() {
       ) : newsAlerts?.length === 0 ? (
         <p>No hay noticias disponibles.</p>
       ) : (
-        newsAlerts.map(alert => (
+        newsAlerts?.map(alert => (
           <div
             key={alert.id}
             className="bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/10 hover:shadow-xl transition-all"

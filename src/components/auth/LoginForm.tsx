@@ -4,7 +4,6 @@ import useForm from "@/hooks/useForm"
 import { axios } from "@/lib/axios"
 import { loginSchema } from "@/lib/validator/auth"
 import { Session, useAuth } from "@/providers/AuthProvider"
-import { load } from "@tauri-apps/plugin-store"
 import { isAxiosError } from "axios"
 import { useNavigation } from "react-router-dom"
 import { toast } from "sonner"
@@ -27,10 +26,7 @@ export default function LoginForm() {
           values
         )
 
-        const store = await load("store.json", { autoSave: false })
-        await store.set("auth-token", access_token)
-
-        await store.save()
+        localStorage.setItem("access_token", access_token)
 
         setSession(session)
         setAccessToken(access_token)

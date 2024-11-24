@@ -1,22 +1,20 @@
 import { axios } from "@/lib/axios"
 import { useAuth } from "@/providers/AuthProvider"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useGeolocation } from "./useGeolocation"
 
 export function useTriggerEmergencyAlert() {
   const { accessToken } = useAuth()
   const queryClient = useQueryClient()
 
   const queryKey = ["user_in_emergency"]
-  const data = useGeolocation()
 
   return useMutation({
     mutationFn: async () => {
       await axios.post(
         "/emergency/alert",
         {
-          locationLat: data?.latitute ?? -14.083723,
-          locationLon: data?.longitude ?? -75.742533
+          locationLat: -14.071553,
+          locationLon: -75.73608
         },
         {
           headers: {

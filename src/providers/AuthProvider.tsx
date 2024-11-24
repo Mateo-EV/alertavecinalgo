@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { load } from "@tauri-apps/plugin-store"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { axios } from "@/lib/axios"
 
@@ -22,18 +21,23 @@ type AuthContextProps = {
   logOut: () => void
 }
 
-const AuthContext = createContext<AuthContextProps>(null)
+const AuthContext = createContext<AuthContextProps>(null!)
 
-export default function AuthProvider({ children }) {
+export default function AuthProvider({
+  children
+}: {
+  children: React.ReactNode
+}) {
   const [session, setSession] = useState<Session | null>(null)
   const [accessToken, setAccessToken] = useState<string | null>(null)
+
+  const queryClient = useQueryClient()
 
   const { isPending } = useQuery({
     queryKey: ["req-profile"],
     queryFn: async () => {
       try {
-        const store = await load("store.json", { autoSave: false })
-        const access_token = (await store.get("auth-token")) as string
+        const access_token = localStorage.getItem("access_token")
 
         if (!access_token) return
 
@@ -65,9 +69,9 @@ export default function AuthProvider({ children }) {
 
   const logOut = async () => {
     try {
-      const store = await load("store.json", { autoSave: false })
-      store.delete("auth-token")
+      localStorage.removeItem("access_token")
       setSession(null)
+      queryClient.clear()
     } catch (error) {
       console.log(error)
     }
@@ -75,7 +79,13 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ session, setSession, logOut, accessToken, setAccessToken }}
+      value={{
+        session,
+        setSession,
+        logOut,
+        accessToken: accessToken ?? "",
+        setAccessToken
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,13 +1,15 @@
 import { useAuth } from "@/providers/AuthProvider"
-import React, { useState } from "react"
+import { useState } from "react"
 import { MdPhotoCamera } from "react-icons/md"
 
 export default function UserProfile() {
   const { session, logOut } = useAuth()
-  const [name, setName] = useState(session.first_name + " " + session.last_name)
-  const [email, setEmail] = useState(session.email)
-  const [phone, setPhone] = useState(session.phone)
-  const [address, setAddress] = useState(session.address)
+  const [name, setName] = useState(
+    session?.first_name + " " + session?.last_name
+  )
+  const [email, setEmail] = useState(session?.email)
+  const [phone, setPhone] = useState(session?.phone)
+  const [address, setAddress] = useState(session?.address)
   const [emailNotifications, setEmailNotifications] = useState(false)
   const [pushNotifications, setPushNotifications] = useState(false)
   const [smsNotifications, setSmsNotifications] = useState(false)
