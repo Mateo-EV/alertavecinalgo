@@ -56,7 +56,11 @@ export default function ChatModal() {
   )
 }
 
-function CreateGroupForm({ setIsOpen }) {
+function CreateGroupForm({
+  setIsOpen
+}: {
+  setIsOpen: (state: boolean) => void
+}) {
   const { accessToken } = useAuth()
   const queryClient = useQueryClient()
   const form = useForm({
@@ -70,8 +74,6 @@ function CreateGroupForm({ setIsOpen }) {
         })
 
         queryClient.setQueryData(["groups"], prev => {
-          console.log(newGroup, prev)
-
           if (!prev) return
 
           return [newGroup, ...(prev as [])]

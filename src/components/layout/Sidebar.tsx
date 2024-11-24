@@ -1,5 +1,5 @@
 import React, { useCallback } from "react"
-import { FaNewspaper } from "react-icons/fa"
+import { FaNewspaper, FaWalking } from "react-icons/fa"
 import { MdClose, MdPerson } from "react-icons/md"
 import { Link } from "react-router-dom"
 
@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
             <ul className="flex flex-col gap-4">
               <li className="flex items-center gap-4 pl-4 w-full">
                 <Link
-                  to="profile"
+                  to="/profile"
                   onClick={handleCloseSidebar}
                   className="flex items-center gap-4 w-full"
                 >
@@ -53,12 +53,22 @@ const Sidebar: React.FC<SidebarProps> = React.memo(
               </li>
               <li className="flex items-center gap-4 pl-4 w-full">
                 <Link
-                  to="alerts"
+                  to="/alerts"
                   onClick={handleCloseSidebar}
                   className="flex items-center gap-4 w-full"
                 >
                   <FaNewspaper className="text-xl" />
                   <span className="flex-1">Noticias</span>
+                </Link>
+              </li>
+              <li className="flex items-center gap-4 pl-4 w-full">
+                <Link
+                  to="/secure-path"
+                  onClick={handleCloseSidebar}
+                  className="flex items-center gap-4 w-full"
+                >
+                  <FaWalking className="text-xl" />
+                  <span className="flex-1">Recorrido Seguro</span>
                 </Link>
               </li>
             </ul>

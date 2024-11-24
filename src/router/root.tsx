@@ -5,6 +5,8 @@ import { useAuth } from "@/providers/AuthProvider"
 import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 
+import "mapbox-gl/dist/mapbox-gl.css"
+
 export default function RootLayout() {
   const { session } = useAuth()
   const navigate = useNavigate()

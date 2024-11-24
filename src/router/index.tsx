@@ -1,18 +1,17 @@
 import EmergencyButton from "@/components/EmergencyButton"
-import { useQuery } from "@tanstack/react-query"
-import "mapbox-gl/dist/mapbox-gl.css"
-import { useEffect, useRef, useState } from "react"
-import { BsPeopleFill, BsTelephoneFill } from "react-icons/bs"
-import Map, { Marker } from "react-map-gl"
-import { Link, useLocation, useNavigation } from "react-router-dom"
-import { axios } from "@/lib/axios"
-import { Incident } from "@/type"
-import mapboxgl from "mapbox-gl"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
 } from "@/components/ui/popover"
+import { axios } from "@/lib/axios"
+import { Incident } from "@/type"
+import { useQuery } from "@tanstack/react-query"
+import mapboxgl from "mapbox-gl"
+import { useEffect, useRef, useState } from "react"
+import { BsPeopleFill, BsTelephoneFill } from "react-icons/bs"
+import Map, { Marker } from "react-map-gl"
+import { Link, useLocation } from "react-router-dom"
 
 export default function MainPage() {
   const [viewport] = useState({

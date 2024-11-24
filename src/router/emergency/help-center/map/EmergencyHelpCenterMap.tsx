@@ -1,23 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
-import mapboxgl from "mapbox-gl";
-import { useSearchParams } from "react-router-dom";
-import Map, { Marker, Popup } from "react-map-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { MdLocationOn } from "react-icons/md";
+import { useEffect, useRef, useState } from "react"
+import { MdLocationOn } from "react-icons/md"
+import Map, { Marker, Popup } from "react-map-gl"
+import { useSearchParams } from "react-router-dom"
 
 export default function EmergencyHelpCenterMap() {
-  const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams()
 
-  const latitude = parseFloat(searchParams.get("lat") || "0");
-  const longitude = parseFloat(searchParams.get("lng") || "0");
-  const centerName = searchParams.get("name") || "Centro de Ayuda";
+  const latitude = parseFloat(searchParams.get("lat") || "0")
+  const longitude = parseFloat(searchParams.get("lng") || "0")
+  const centerName = searchParams.get("name") || "Centro de Ayuda"
 
   const [viewport, setViewport] = useState({
     latitude: latitude,
     longitude: longitude,
     zoom: 14
   })
-  
+
   const [mapStyle, setMapStyle] = useState("mapbox://styles/mapbox/streets-v12")
   const mapRef = useRef<mapboxgl.Map | null>(null)
 
@@ -41,18 +39,18 @@ export default function EmergencyHelpCenterMap() {
           onMove={evt => setViewport(evt.viewState)}
         >
           <Marker latitude={latitude} longitude={longitude} anchor="bottom">
-            <Popup 
-              latitude={latitude} 
-              longitude={longitude} 
-              offset={25} 
+            <Popup
+              latitude={latitude}
+              longitude={longitude}
+              offset={25}
               anchor="top"
               className="p-2 text-center"
               closeButton={false}
               closeOnClick={false}
             >
-              <div className="flex items-center space-x-2">   
+              <div className="flex items-center space-x-2">
                 <MdLocationOn className="text-red-500 text-xl" />
-                <span className="text-black font-semibold" >{centerName}</span>
+                <span className="text-black font-semibold">{centerName}</span>
               </div>
             </Popup>
           </Marker>

@@ -22,6 +22,7 @@ import RootLayout from "./router/root"
 import ChatBox from "./router/Chats/ChatBox"
 import EmergencyHelpCenterMap from "./router/emergency/help-center/map/EmergencyHelpCenterMap"
 import NotificationInterface from "./router/Notifications/NotificationInterface"
+import SecurePath from "./router/SecurePath"
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "notifications",
         element: <NotificationInterface />
+      },
+      {
+        path: "secure-path",
+        element: <SecurePath />
       }
     ]
   },
