@@ -19,6 +19,7 @@ type AuthContextProps = {
   setSession: (session: Session | null) => void
   setAccessToken: (accessToken: string | null) => void
   logOut: () => void
+  refetch: () => void
 }
 
 const AuthContext = createContext<AuthContextProps>(null!)
@@ -33,7 +34,7 @@ export default function AuthProvider({
 
   const queryClient = useQueryClient()
 
-  const { isPending } = useQuery({
+  const { isPending, refetch } = useQuery({
     queryKey: ["req-profile"],
     queryFn: async () => {
       try {
@@ -84,7 +85,8 @@ export default function AuthProvider({
         setSession,
         logOut,
         accessToken: accessToken ?? "",
-        setAccessToken
+        setAccessToken,
+        refetch
       }}
     >
       {children}
