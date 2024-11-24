@@ -29,7 +29,6 @@ import { axios } from "@/lib/axios"
 import { useAuth } from "@/providers/AuthProvider"
 import { Incident } from "@/type"
 import { useQueryClient } from "@tanstack/react-query"
-import { sendNotification } from "@tauri-apps/plugin-notification"
 import { CameraIcon, SendIcon, Upload, XIcon } from "lucide-react"
 import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -74,11 +73,16 @@ export default function ReportIncident() {
     },
     onSubmit: async ({ description, incident_type }) => {
       try {
+        if (!file) {
+          toast.error("Agrega una imagen")
+          return
+        }
+
         const formData = new FormData()
         formData.append("description", description)
         formData.append("incident_type", incident_type)
-        formData.append("location_lat", "-14.083723")
-        formData.append("location_lon", "-75.742533")
+        formData.append("location_lat", "-14.071553")
+        formData.append("location_lon", "-75.736080")
         formData.append("file", file)
 
         const response = await axios.post<Incident>(
@@ -97,12 +101,6 @@ export default function ReportIncident() {
         })
 
         toast.success("Incidencia creada correctamente")
-
-        sendNotification({
-          title: response.data.incident_type,
-          body: response.data.description,
-          attachments: [{ id: response.data.id, url: response.data.multimedia }]
-        })
         navigate("/")
       } catch (error) {
         toast.error("Algo salió mal")
