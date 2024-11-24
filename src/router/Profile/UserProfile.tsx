@@ -1,5 +1,5 @@
 import { useAuth } from "@/providers/AuthProvider"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MdPhotoCamera } from "react-icons/md"
 
 export default function UserProfile() {
@@ -13,6 +13,13 @@ export default function UserProfile() {
   const [emailNotifications, setEmailNotifications] = useState(false)
   const [pushNotifications, setPushNotifications] = useState(false)
   const [smsNotifications, setSmsNotifications] = useState(false)
+
+  useEffect(() => {
+    setName(session?.first_name + " " + session?.last_name)
+    setEmail(session?.email)
+    setPhone(session?.phone)
+    setAddress(session?.address)
+  }, [session])
 
   return (
     <div className="p-6 space-y-6 text-[var(--color-princi)]">

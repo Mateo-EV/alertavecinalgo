@@ -1,6 +1,5 @@
 import RegisterForm from "@/components/auth/RegisterForm"
 import {
-  Card,
   CardContent,
   CardDescription,
   CardFooter,
